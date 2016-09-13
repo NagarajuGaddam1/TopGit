@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html ng-csp ng-app="TopGit.UI">
+<head>
+    <title>TopGit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.css" rel="stylesheet" />
+    <link href="dist/css/app.min.css" rel="stylesheet" />
+    <script src="app.js"></script>
+</head>
+<body class="{{main.activeColorMode.colorId}}" ng-controller="TopGit.UI.MainController as main" ng-cloak ng-class="{'colorPickerActive': main.showColorPicker}">
+    <div class="color-switcher">
+        <div class="theme-switcher accent-picker">
+            <label class="settings-label">Pick Accent</label>
+            <div class="accent-picker-close" ng-click="main.closeColorPicker()"><span class="glyphicon glyphicon-remove"></span></div>
+            <div class="settings-color-picker" ng-show="main.settingsPaneColorsInitalized">
+                <div class="color-originator"></div>
+                <div class="color-plate" ng-repeat="color in main.shownColorModes" ng-style="{
+                'background-color':color.code,
+                'z-index': main.shownColorModes.length - $index,
+                'transition':color.transition}" ng-attr-id="color_{{color.colorId}}"
+                     ng-click="main.choseColor(color)"></div>
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="header-profile-data">
+            <div class="header-picture-container">
+                <a target="_blank" href="">
+                    <svg width="48px" height="47px" viewBox="0 0 48 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <title>Github</title>
+                        <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Black" transform="translate(-700.000000, -560.000000)" fill="#fff">
+                                <path d="M723.9985,560 C710.746,560 700,570.787092 700,584.096644 C700,594.740671 706.876,603.77183 716.4145,606.958412 C717.6145,607.179786 718.0525,606.435849 718.0525,605.797328 C718.0525,605.225068 718.0315,603.710086 718.0195,601.699648 C711.343,603.155898 709.9345,598.469394 709.9345,598.469394 C708.844,595.686405 707.2705,594.94548 707.2705,594.94548 C705.091,593.450075 707.4355,593.480194 707.4355,593.480194 C709.843,593.650366 711.1105,595.963499 711.1105,595.963499 C713.2525,599.645538 716.728,598.58234 718.096,597.964902 C718.3135,596.407754 718.9345,595.346062 719.62,594.743683 C714.2905,594.135281 708.688,592.069123 708.688,582.836167 C708.688,580.205279 709.6225,578.054788 711.1585,576.369634 C710.911,575.759726 710.0875,573.311058 711.3925,569.993458 C711.3925,569.993458 713.4085,569.345902 717.9925,572.46321 C719.908,571.928599 721.96,571.662047 724.0015,571.651505 C726.04,571.662047 728.0935,571.928599 730.0105,572.46321 C734.5915,569.345902 736.603,569.993458 736.603,569.993458 C737.9125,573.311058 737.089,575.759726 736.8415,576.369634 C738.3805,578.054788 739.309,580.205279 739.309,582.836167 C739.309,592.091712 733.6975,594.129257 728.3515,594.725612 C729.2125,595.469549 729.9805,596.939353 729.9805,599.18773 C729.9805,602.408949 729.9505,605.006706 729.9505,605.797328 C729.9505,606.441873 730.3825,607.191834 731.6005,606.9554 C741.13,603.762794 748,594.737659 748,584.096644 C748,570.787092 737.254,560 723.9985,560" id="Github"></path>
+                            </g>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <div class="header-profile-mast">
+                <div class="header-profile-mast-name"><strong>Top</strong>Git</div>
+                <div class="header-profile-mast-title">finding the best github projects</div>
+            </div>
+            <div class="header-profile-links-pages-list-toggle pull-right" title="Change app accent" ng-click="main.openColorPicker()"></div>
+        </div>
+    </div>
+    <div class="loader-spinner" id="contentLoaderSpinner">
+        <div class="loader-spinner-overlay"></div>
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <div class="scrollUpIcon" id="scrollUpIcon" ng-click="main.scrollUp()">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    <div class="content" id="searchResultsContainer">
+        <div class="content-search">
+            <div class="col-xs-12 col-sm-12 col-md-6 pad-l-r-0 content-search-input-box">
+                <md-autocomplete class="content-search-lang-input" md-selected-item="main.selectedLanguage" md-search-text-change="main.searchTextChange(main.searchText)" md-search-text="main.searchText" md-selected-item-change="main.selectedItemChange(item)" md-items="item in main.languages" md-item-text="item" md-min-length="0" placeholder="Search (by language)">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3 pad-l-r-0 content-search-sort">
+                <span>Sort Order</span>
+                <md-input-container>
+                    <md-select ng-model="main.sortPredicate" placeholder="" class="md-no-underline" ng-change="main.sortOptionChanged()" aria-label="choose sort option">
+                        <md-option ng-repeat="option in main.sortOptions" ng-value="option.text">
+                            {{option.text}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <div class="order" ng-class="{'active': main.order == 'asc'}" ng-click="main.orderAsc()">A <span class="glyphicon glyphicon-arrow-up"></span></div>
+                <div class="order" ng-class="{'active': main.order == 'desc'}" ng-click="main.orderDesc()">D <span class="glyphicon glyphicon-arrow-down"></span></div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-3 pad-l-r-0 content-search-stars">
+                <md-slider-container>
+                    <span class="md-body-1">Min. Stars</span>
+                    <md-slider flex="" ng-model="main.minStars" min="0" max="1000" aria-label="minStars" id="minStars-slider" ng-change="main.minStarsChanged()"></md-slider>
+                    <md-input-container>
+                        <input flex="" type="number" ng-model="main.minStars" aria-label="minStars" aria-controls="minStars-slider">
+                    </md-input-container>
+                </md-slider-container>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <label class="content-live-banner">We have found {{main.totalCount}} results matching '{{main.activeLang}}' ...</label>
+        <div class="content-results">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 content-results-item" ng-repeat="project in main.projects track by $index">
+                <a class="content-results-item-box" ng-href="{{project.html_url}}" ng-attr-id="{{project.id}}" target="_blank" ng-attr-title="{{project.description}}">
+                    <label class="content-results-item-box-title" ng-bind="project.full_name"></label>
+                    <label class="content-results-item-box-stars"><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span ng-bind="project.stargazers_count"></span></label>
+                    <label class="content-results-item-box-desc" ng-bind="project.description"></label>
+                </a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+</html>

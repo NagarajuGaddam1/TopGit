@@ -1,0 +1,206 @@
+﻿$defaultPalettes:(
+    turquoise: #1abc9c,
+    emerland: #2ecc71,
+    peterRiver: #3498db,
+    amethyst: #9b59b6,
+    moosikPurple: #d613b5,
+    wetAsphalt: #34495e,
+    greenSea: #16a085,
+    nephritis: #27ae60,
+    belizeHole: #2980b9,
+    wisteria: #8e44ad,
+    midnightBlue: #2c3e50,
+    sunDlower: #f1c40f,
+    carrot: #e67e22,
+    alizarin: #e74c3c,
+    orange: #f39c12,
+    pumpkin: #d35400,
+    pomegranate: #c0392b   
+);
+
+@mixin respond-to-xsmobi {
+    @media only screen and (max-width:500px) {
+        @content;
+    }
+}
+
+@mixin respond-to-mobile {
+    @media only screen and (max-width:768px) {
+        @content;
+    }
+}
+
+@mixin respond-to-md {
+    @media only screen and (min-width: 769px) and (max-width:992px) {
+        @content;
+    }
+}
+
+@mixin focus-states($color: null) {
+    @if($color) {
+        &:active, &:hover {
+            background: $color;
+            cursor: pointer;
+        }
+
+        &:active {
+            background: $color;
+            -moz-transform: scale(0.98, 0.98);
+            -ms-transform: scale(0.98, 0.98);
+            -o-transform: scale(0.98, 0.98);
+            -webkit-transform: scale(0.98, 0.98);
+            transform: scale(0.98, 0.98);
+        }
+
+        &.disabled,
+        &[disabled] {
+            opacity: 0.6;
+
+            &:active, &:hover {
+                background: transparent;
+            }
+
+            &:active {
+                -moz-transform: none;
+                -ms-transform: none;
+                -o-transform: none;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+    }
+    @else {
+        &:active, &:hover {
+            background: rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        &:active {
+            background: rgba(0,0,0,0.2);
+            -moz-transform: scale(0.98, 0.98);
+            -ms-transform: scale(0.98, 0.98);
+            -o-transform: scale(0.98, 0.98);
+            -webkit-transform: scale(0.98, 0.98);
+            transform: scale(0.98, 0.98);
+        }
+
+        &.disabled,
+        &[disabled] {
+            opacity: 0.6;
+
+            &:active, &:hover {
+                background: transparent;
+                cursor: default;
+            }
+
+            &:active {
+                -moz-transform: none;
+                -ms-transform: none;
+                -o-transform: none;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+    }
+}
+
+$screen-xs-max: 768px;
+$screen-sm-min: 769px;
+$screen-sm-max: 992px;
+$screen-md-min: 993px;
+$screen-md-max: 1200px;
+$screen-tablet-min: 1201px;
+$screen-tablet-max: 1366px;
+$screen-desktop-min: 1367px;
+$screen-desktop-max: 1600px;
+$screen-lg-min: 1601px;
+
+
+$break-mob: 320px;
+$break-tablet: 768px;
+$break-desktop: 1024px;
+
+
+@mixin respond-to($media) {
+    @if $media == tablet {
+        @media only screen and (min-width:$break-tablet) and (max-width:$break-desktop - 1) {
+            @content;
+        }
+    }
+    @else if $media == mobile {
+        @media only screen and (min-width:$break-mob) and (max-width:$break-tablet - 1) {
+            @content;
+        }
+    }
+}
+
+$spacer: 5px !default;
+$spacer-x: $spacer !default;
+$spacer-y: $spacer !default;
+$spacers: ( 0: ( x: 0, y: 0 ), auto: ( x: auto, y: auto ), 5: ( x: $spacer-x, y: $spacer-y ), 10: ( x: ($spacer-x * 2), y: ($spacer-y * 2) ), 15: ( x: ($spacer-x * 3), y: ($spacer-y * 3) ), 20: ( x: ($spacer-x * 4), y: ($spacer-y * 4)), 30: ( x: ($spacer-x * 6), y: ($spacer-y * 6)) ) !default;
+
+@each $prop, $abbrev in (margin: m, padding: p) {
+    @each $size, $lengths in $spacers {
+        $length-x: map-get($lengths, x);
+        $length-y: map-get($lengths, y);
+
+        .#{$abbrev}-a-#{$size} {
+            #{$prop}: $length-y $length-x !important;
+        }
+
+        .#{$abbrev}-t-#{$size} {
+            #{$prop}-top: $length-y !important;
+        }
+
+        .#{$abbrev}-r-#{$size} {
+            #{$prop}-right: $length-x !important;
+        }
+
+        .#{$abbrev}-b-#{$size} {
+            #{$prop}-bottom: $length-y !important;
+        }
+
+        .#{$abbrev}-l-#{$size} {
+            #{$prop}-left: $length-x !important;
+        }
+
+        // Axes
+        .#{$abbrev}-x-#{$size} {
+            #{$prop}-right: $length-x !important;
+            #{$prop}-left: $length-x !important;
+        }
+
+        .#{$abbrev}-y-#{$size} {
+            #{$prop}-top: $length-y !important;
+            #{$prop}-bottom: $length-y !important;
+        }
+    }
+}
+
+.d-b {
+    display: block;
+}
+
+.d-ib {
+    display: inline-block;
+}
+
+.d-i {
+    display: inline;
+}
+
+.p-s {
+    position: static;
+}
+
+.p-a {
+    position: absolute;
+}
+
+.p-r {
+    position: relative;
+}
+
+.p-f {
+    position: fixed;
+}
