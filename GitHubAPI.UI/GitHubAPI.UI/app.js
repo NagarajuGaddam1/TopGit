@@ -12,14 +12,6 @@
      * Implemented track of response Header X-RateLimit-Remaining / X-RateLimit-Limit - keep scrolling within a minute to mke around 10+ requests to the API
      * Implemented autocomplete feature to Search programming languages conveniently
      * 
-     *      
-     * GULP
-     * AngularJS 1.5.8
-     * Bootstrap
-     * Underscore
-     * jQuery
-     * SCSS
-     * 
      */
 
     function MainController($timeout, repoService, $mdToast) {
@@ -52,7 +44,7 @@
         self.projects = [];
         self.selectedLanguage = 'JS';
         self.currentPage = 0;
-        self.XRateLimitRemaining = 0;        
+        self.XRateLimitRemaining = 0;
         self.fetchInProgress = false;
         self.sortPredicate = 'stars';
         self.sortOptions = [
@@ -78,7 +70,7 @@
                 var _toMatchHeight = $(e.target).height() + $(e.target)[0].scrollTop;
                 var _matchToHeight = $(e.target)[0].scrollHeight;
                 if (_matchToHeight - _toMatchHeight <= 60) {
-                    if (self.fetchInProgress == false)
+                    if (self.fetchInProgress === false)
                         self.getNextPageResults();
                 }
             }
@@ -96,14 +88,14 @@
     }
     MainController.prototype.orderAsc = function () {
         var self = this;
-        if (self.order != 'asc') {
+        if (self.order !== 'asc') {
             self.order = 'asc';
             self.fetchResults(self.activeLang, self.minStars, self.sortPredicate, self.order, true);
         }
     }
     MainController.prototype.orderDesc = function () {
         var self = this;
-        if (self.order != 'desc') {
+        if (self.order !== 'desc') {
             self.order = 'desc';
             self.fetchResults(self.activeLang, self.minStars, self.sortPredicate, self.order, true);
         }
@@ -120,7 +112,7 @@
 
     MainController.prototype.openColorPicker = function () {
         var self = this;
-        if (self.showColorPicker == false) {
+        if (self.showColorPicker === false) {
             self.showColorPicker = true;
             self.settingsPaneColorsInitalized = true;
             self.shownColorModes = [];
@@ -203,9 +195,10 @@
         if (spinnerFlag) {
             document.getElementById('contentLoaderSpinner').style.display = 'block';
             self.projects = [];
+            self.totalCount = 0;
         }
 
-        if (self.activeLang == lang && self.activeMinStars == stars)
+        if (self.activeLang === lang && self.activeMinStars === stars)
             self.currentPage = self.currentPage + 1;
         else
             self.currentPage = 0;
@@ -213,7 +206,7 @@
         self.activeMinStars = stars;
         self.repoService.get(self.activeLang, self.minStars, self.rateLimit, self.sortPredicate, self.order, self.currentPage)
             .then(function (response) {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     self.XRateLimitRemaining = parseInt(response.headers()['x-ratelimit-remaining']);
                     if (!self.maxRateLimit) {
                         self.maxRateLimit = parseInt(response.headers()['x-ratelimit-limit']);
@@ -226,11 +219,11 @@
                             self.insertProject(_dat);
                         });
                     }
-                    if (self.XRateLimitRemaining == 0) {
+                    if (self.XRateLimitRemaining === 0) {
                         self.toast('API rate limit reached.');
                     }
                 }
-                if (response.status != 200) {
+                if (response.status !== 200) {
                     self.toast('API error. Please try again in a few minutes.');
                 }
                 document.getElementById('contentLoaderSpinner').style.display = 'none';
@@ -251,7 +244,7 @@
     MainController.prototype.selectedItemChange = function (item) {
         var self = this;
         if (typeof item !== 'undefined') {
-            self.fetchResults(item, self.activeMinStars, self.sortPredicate, true);
+            self.fetchResults(item, self.minStars, self.sortPredicate, self.order, true);
         }
     }
 
@@ -269,6 +262,7 @@
             url: encodeURI(uri),
             method: "GET"
         }).then(function (response) {
+            console.log(response);
             if (!angular.isUndefined(response)) {
                 return response;
             }
@@ -279,7 +273,7 @@
 
     RepoServiceDefnition.prototype.getLanguages = function (token) {
         return this.languages.filter(function (lang) {
-            return lang.indexOf(token) != -1;
+            return lang.indexOf(token) !== -1;
         });
     }
 
